@@ -17,6 +17,74 @@
   - `npm run test-calculator`
 */
 
-class Calculator {}
+class Calculator {
+  constructor(){
+    this.result = 0;
+  }
+
+  add(number){
+    this.validateNumber(number)
+    this.result += number;
+  }
+
+  subtract(number){
+    this.validateNumber(number)
+    this.result -= number;
+  }
+
+  multiply(number){
+    this.validateNumber(number)
+    this.result *= number;
+  }
+
+  divide(number){
+    if (number === 0) {
+      throw new Error("Cannot divide by zero");
+    }
+    this.result /= number;
+  }
+
+  clear(){
+    this.result = 0;
+  }
+
+  getResult(){
+    return this.result;
+  }
+
+  calculate(expression) {
+    if (!expression) {
+      throw new Error("Enter valid expression.");
+    }
+  
+    const sanitizedExpression = expression.replace(/\s+/g, "");
+    const regex = /^-?\d+(\.\d+)?([\+\-\*\/]-?\d+(\.\d+)?)*(?:\([\d\+\-\*\/. ]+\))?$/;
+
+  
+    if (!regex.test(sanitizedExpression)) {
+      throw new Error("Invalid expression");
+    }
+  
+    try {
+      this.result = eval(sanitizedExpression);
+    } catch (error) {
+      throw new Error("Error in evaluating expression");
+    }
+  }
+  
+
+  validateNumber(number){
+    if(typeof number !== 'number' || isNaN(number)){
+      throw new Error("Invalid number");
+    }
+  }
+}
+
+const calculator = new Calculator();
+
+test('calculate addition', () => {
+  calculator.calculate("5 + 3");
+  expect(calculator.getResult()).toBe(8);
+});
 
 module.exports = Calculator;

@@ -6,8 +6,30 @@
   - `npm run test-palindrome`
 */
 
-function isPalindrome(str) {
-  return true;
+function transform(str){
+  var answer = "";
+  for(var i=0; i<str.length; i++){
+    if(str[i] === " " || str[i] === "," ||str[i] === "?" ||str[i] === "!" ||str[i] === "."){
+
+    }
+
+    else{
+      answer += str[i]
+    }
+  }
+
+  return answer;
 }
 
-module.exports = isPalindrome;
+function isPalindrome(str) {
+    str = str.toLowerCase();
+    str = transform(str)
+
+    var revStr = str.split("").reverse().join("");
+    return str === revStr;
+  }
+
+  var str = "Race car"
+  console.log(isPalindrome(str));
+  
+  module.exports = isPalindrome;
